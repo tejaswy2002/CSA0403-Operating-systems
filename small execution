@@ -1,0 +1,75 @@
+#include<stdio.h>
+ int main()
+{
+    int bt[20],p[20],wt[20],tat[20],i,j,n,total=0,pos,temp;
+    float avg_wt,avg_tat;
+    printf("Enter number of process:");
+    scanf("%d",&n);
+  
+    printf("nEnter Burst Time:n");
+    for(i=0;i<n;i++)
+    {
+        printf("p%d:",i+1);
+        scanf("%d",&bt[i]);
+        p[i]=i+1;         
+    }
+  
+   //sorting of burst times
+    for(i=0;i<n;i++)
+    {
+        pos=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(bt[j]<bt[pos])
+                pos=j;
+        }
+  
+        temp=bt[i];
+        bt[i]=bt[pos];
+        bt[pos]=temp;
+  
+        temp=p[i];
+        p[i]=p[pos];
+        p[pos]=temp;
+    }
+   
+    wt[0]=0;            
+  
+   
+    for(i=1;i<n;i++)
+    {
+        wt[i]=0;
+        for(j=0;j<i;j++)
+            wt[i]+=bt[j];
+  
+        total+=wt[i];
+    }
+  
+    avg_wt=(float)total/n;      
+    total=0;
+  
+    printf("nProcesst    Burst Time    tWaiting TimetTurnaround Time");
+    for(i=0;i<n;i++)
+    {
+        tat[i]=bt[i]+wt[i];   
+        total+=tat[i];
+        printf("np%dtt  %dtt    %dttt%d",p[i],bt[i],wt[i],tat[i]);
+    }
+  
+    avg_tat=(float)total/n;    
+    printf("nnAverage Waiting Time=%f",avg_wt);
+    printf("nnAverage Turnaround Time=%fn",avg_tat);
+}
+OUTPUT:-
+Enter number of process:7
+nEnter Burst Time:np1:1
+p2:2
+p3:4
+p4:6
+p5:7
+p6:9
+p7:6
+nProcesst    Burst Time    tWaiting TimetTurnaround Timenp1tt  1tt    0ttt1np2tt  2tt    1ttt3np3tt  4tt    3ttt7np4tt  6tt    7ttt13np7tt  6tt    13ttt19np5tt  7tt    19ttt26np6tt  9tt    26ttt35nnAverage Waiting Time=9.857142nnAverage Turnaround Time=14.857142n
+--------------------------------
+Process exited after 21.63 seconds with return value 0
+Press any key to continue . . .
